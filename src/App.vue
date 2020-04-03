@@ -1,32 +1,20 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <div class="container">
+            <h2><i class="icon-chart icons tred"></i> COVID-19</h2>
+            <router-link class="button" to="/">Lokal</router-link> 
+            <router-link class="button" to="/globe">Global</router-link> 
+            <router-link class="button" to="/about">About</router-link>
+        <router-view />
+        </div>
     </div>
-    <router-view/>
-  </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  @import './assets/css/fazaio.css';
+  @import './assets/css/style.css';
+  @import 'https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css';
+  .mt1{
+    margin-top: 100px;
+  }
 </style>
