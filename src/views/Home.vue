@@ -1,6 +1,6 @@
 <template>
     <div class="containers">
-        <vue-glide :breakpoints="breakpoin" :autoplay="2000">
+        <vue-glide :type="typeglide" :breakpoints="breakpoin" :autoplay="2000">
             <vue-glide-slide>
                 <div class="isi">
                     <div class="center"><b>Jumlah Kasus:</b></div>
@@ -25,29 +25,85 @@
                         </div>
                     </div>
                 </div>
+                <div class="center" style="margin-top: 10px">
+                    <span>Indonesia</span>
+                </div>
+                <div class="single-card" style="margin:50px 10px 0px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Data diatas merupakan jumlah dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir. Sumber data tertera pada laman Info.</span>
+                    </div>
+                </div>
+                <div class="single-card" style="margin:10px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Update : <br>{{lastupdate}}</span>
+                    </div>
+                </div>
             </vue-glide-slide>
             <vue-glide-slide>
                 <b>Line chart</b><br>
                 <span>• Grafik garis</span>
                 <linechart v-if="loaded" :linedata="chartdata" />
+                <div class="center" style="margin-top: 10px">
+                    <span>Indonesia</span>
+                </div>
+                <div class="single-card" style="margin:50px 10px 0px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Grafik garis diatas merupakan jumlah dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
+                    </div>
+                </div>
+                <div class="single-card" style="margin:10px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Ketuk tulisan <i>'konfirmasi'</i> untuk menyembunyikan data konfirmasi dan melihat lebih jelas perbandingan antara meninggal & sembuh.</span>
+                    </div>
+                </div>
+            </vue-glide-slide>
+            <vue-glide-slide>
+                <b>Doughnut Chart</b><br>
+                <span>• Grafik donat</span>
+                <doughnut v-if="loaded" :doughnutdata="doughdata"/>
+                <div class="center" style="margin-top: 10px">
+                    <span>Indonesia</span>
+                </div>
+                <div class="single-card" style="margin:50px 10px 0px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Grafik donat dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
+                    </div>
+                </div>
+                <div class="single-card" style="margin:10px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Ketuk warna donat untuk melihat label data dan jumlah angka.</span>
+                    </div>
+                </div>
             </vue-glide-slide>
             <vue-glide-slide>
                 <b>Bar chart</b><br>
                 <span>• Grafik batang</span>
                 <barchart v-if="loaded" :bardata="chartdata" />
-            </vue-glide-slide>
-            <vue-glide-slide>
-                <b>Doughnut Chart</b><br>
-                <span>• Grafik donat</span>
-                <doughnut v-if="loaded" :doughnutdata="doughdata" />
+                <div class="center" style="margin-top: 10px">
+                    <span>Indonesia</span>
+                </div>
+                <div class="single-card" style="margin:50px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Grafik batang dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
+                    </div>
+                </div>
             </vue-glide-slide>
             <vue-glide-slide>
                 <b>Pie Chart</b><br>
                 <span>• Grafik Lingkaran</span>
+                <piechart v-if="loaded" :piedata="doughdata" />
+                <div class="center" style="margin-top: 10px">
+                    <span>Indonesia</span>
+                </div>
+                <div class="single-card" style="margin:50px 10px;">
+                    <div style="padding: 10px;"><span class="tred">•</span>
+                        <span> Grafik lingkaran dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
+                    </div>
+                </div>
             </vue-glide-slide>
         </vue-glide>
         <div class="footer">
-            #staysafe | "Soliteradalahsolidaritas" | #dirumahaja<br>Powered by: <span class="tred"><b>@fazaio</b></span>
+            #staysafe | "Soliteradalahsolidaritas" | #dirumahaja<br>Powered by: <span class="tred"><b>@fazaioo</b></span>
         </div>
     </div>
 </template>
@@ -57,6 +113,7 @@ import { Glide, GlideSlide } from 'vue-glide-js'
 import linechart from '../components/lineChart.js'
 import barchart from '../components/barChart.js'
 import doughnut from '../components/doughnutChart.js'
+import piechart from '../components/pieChart.js'
 
 export default {
     name: 'Home',
@@ -65,7 +122,8 @@ export default {
         [GlideSlide.name]: GlideSlide,
         linechart,
         barchart,
-        doughnut
+        doughnut,
+        piechart
     },
     data: function() {
         return {
@@ -84,13 +142,13 @@ export default {
             },
             chartdata: '',
             doughdata: '',
-            loaded: false
+            loaded: false,
+            typeglide: 'carousel'
         }
     },
     created() {
         this.datalocal()
         this.getChart()
-        console.log('msg')
     },
     methods: {
         datalocal: function() {
@@ -99,7 +157,7 @@ export default {
                 vm.confirmed = response.data.confirmed.value;
                 vm.recovered = response.data.recovered.value;
                 vm.deaths = response.data.deaths.value;
-                vm.lastupdate = response.data.lastUpdatedAt;
+                vm.lastupdate = response.data.lastUpdate;
                 vm.rest = response.data.confirmed.value - response.data.recovered.value - response.data.deaths.value;
             }, function(error) {
                 console.log(error.statusText);
@@ -113,6 +171,13 @@ export default {
                 var deat = []
                 var reco = []
                 var data = response.data.Indonesia.slice(-14)
+                var doughnut = response.data.Indonesia.slice(-1)
+
+                var doughnutdat = []
+                 doughnutdat[2] = doughnut[0].confirmed
+                 doughnutdat[1] = doughnut[0].deaths
+                 doughnutdat[0] = doughnut[0].recovered
+
                 for (var i = 0; i < data.length; i++) {
                     date.push(data[i].date)
                     conf.push(data[i].confirmed)
@@ -126,34 +191,40 @@ export default {
                             label: 'Meninggal',
                             borderColor: 'rgb(220,53,69,0.7)',
                             backgroundColor: 'rgb(220,53,69,0.2)',
-                            data: deat
+                            data: deat,
+                            borderWidth: 1
                         },
                         {
                             label: 'Konfirmasi',
                             borderColor: 'rgb(0,184,148,0.7)',
                             backgroundColor: 'rgb(0,184,148, 0.2)',
-                            data: conf
+                            data: conf,
+                            borderWidth: 1
                         },
                         {
                             label: 'Sembuh',
                             borderColor: 'rgb(9, 132, 227, 0.7)',
                             backgroundColor: 'rgb(9, 132, 227, 0.2)',
-                            data: reco
+                            data: reco,
+                            borderWidth: 1
                         }
                     ]
                 }
 
                 vm.doughdata = {
                     datasets: [{
-                        data: [10, 20, 30]
+                        data: doughnutdat,
+                        backgroundColor: ['rgb(9, 132, 227, 0.2)', 'rgb(220,53,69,0.2)', 'rgb(0,184,148,0.2)'],
+                        borderColor: ['rgb(9, 132, 227, 0.7)','rgb(220,53,69,0.7)','rgb(0,184,148,0.7)'],
+                        borderWidth: 1
                     }],
                     labels: [
-                        'Red',
-                        'Yellow',
-                        'Blue'
+                        'Sembuh',
+                        'Meninggal',
+                        'konfirmasi'
                     ]
                 }
-                console.log('msg')
+
                 vm.loaded = true
 
             }, function(error) {
