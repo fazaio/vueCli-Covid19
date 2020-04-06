@@ -9,7 +9,7 @@
         	<div class="loader"></div><br>
         </div>
         <div id="global">
-            <div class="single-card" style="margin-top: 40px;color: gray !important" v-for="(value,country) in filter">
+            <div class="single-card" style="margin-top: 40px;color: gray !important" v-for="(value,country) in filter" v-bind:key="value">
                 <div class="flx">
                     <div class="col"><b> {{ country }} </b></div>
                     <div class="col" style="text-align: right;font-size: 10px"><i>{{ value.slice(-1)[0].date }}</i></div>
