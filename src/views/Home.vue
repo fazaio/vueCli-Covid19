@@ -43,6 +43,9 @@
                 <b>Line chart</b><br>
                 <span>• Grafik garis</span>
                 <linechart v-if="loaded" :linedata="chartdata" />
+                <div class="center" v-if="!loaded">
+                    <div class="loader"></div><br>
+                </div>
                 <div class="center" style="margin-top: 10px">
                     <span>Indonesia</span>
                 </div>
@@ -60,7 +63,10 @@
             <vue-glide-slide>
                 <b>Doughnut Chart</b><br>
                 <span>• Grafik donat</span>
-                <doughnut v-if="loaded" :doughnutdata="doughdata"/>
+                <doughnut v-if="loaded" :doughnutdata="doughdata" />
+                <div class="center" v-if="!loaded">
+                    <div class="loader"></div><br>
+                </div>
                 <div class="center" style="margin-top: 10px">
                     <span>Indonesia</span>
                 </div>
@@ -79,6 +85,9 @@
                 <b>Bar chart</b><br>
                 <span>• Grafik batang</span>
                 <barchart v-if="loaded" :bardata="barchart" />
+                <div class="center" v-if="!loaded">
+                    <div class="loader"></div><br>
+                </div>
                 <div class="center" style="margin-top: 10px">
                     <span>Indonesia</span>
                 </div>
@@ -92,6 +101,9 @@
                 <b>Pie Chart</b><br>
                 <span>• Grafik Lingkaran</span>
                 <piechart v-if="loaded" :piedata="doughdata" />
+                <div class="center" v-if="!loaded">
+                    <div class="loader"></div><br>
+                </div>
                 <div class="center" style="margin-top: 10px">
                     <span>Indonesia</span>
                 </div>
@@ -178,9 +190,9 @@ export default {
                 var doughnut = response.data.Indonesia.slice(-1)
 
                 var doughnutdat = []
-                 doughnutdat[2] = doughnut[0].confirmed
-                 doughnutdat[1] = doughnut[0].deaths
-                 doughnutdat[0] = doughnut[0].recovered
+                doughnutdat[2] = doughnut[0].confirmed
+                doughnutdat[1] = doughnut[0].deaths
+                doughnutdat[0] = doughnut[0].recovered
 
                 for (var i = 0; i < data.length; i++) {
                     date.push(data[i].date)
@@ -188,11 +200,11 @@ export default {
                     deat.push(data[i].deaths)
                     reco.push(data[i].recovered)
 
-                    var z = 1+i;
+                    var z = 1 + i;
                     if (data[z] !== undefined) {
-                        bconf.push(data[z].confirmed-data[i].confirmed)
-                        bdeat.push(data[z].deaths-data[i].deaths)
-                        breco.push(data[z].recovered-data[i].recovered)
+                        bconf.push(data[z].confirmed - data[i].confirmed)
+                        bdeat.push(data[z].deaths - data[i].deaths)
+                        breco.push(data[z].recovered - data[i].recovered)
                     }
                 }
 
@@ -251,7 +263,7 @@ export default {
                     datasets: [{
                         data: doughnutdat,
                         backgroundColor: ['rgb(9, 132, 227, 0.2)', 'rgb(220,53,69,0.2)', 'rgb(0,184,148,0.2)'],
-                        borderColor: ['rgb(9, 132, 227, 0.7)','rgb(220,53,69,0.7)','rgb(0,184,148,0.7)'],
+                        borderColor: ['rgb(9, 132, 227, 0.7)', 'rgb(220,53,69,0.7)', 'rgb(0,184,148,0.7)'],
                         borderWidth: 1
                     }],
                     labels: [

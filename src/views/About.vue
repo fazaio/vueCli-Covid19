@@ -7,6 +7,7 @@
         </ul>
         <b>Data Source:</b>
         <ul>
+            <li><span class="tred">@mathdroid</span> | https://github.com/mathdroid</li>
             <li><span class="tred">@pomber</span> | https://github.com/pomber/covid19</li>
             <li><span class="tred">kawalcovid19.id</span> | https://kawalcovid19.id/</li>
             <li><span class="tred">CSSEGISandData/COVID-19 </span> | 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE: https://github.com/CSSEGISandData/COVID-19</li>
