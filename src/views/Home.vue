@@ -1,6 +1,6 @@
 <template>
     <div class="containers">
-        <vue-glide :type="typeglide" :breakpoints="breakpoin" :autoplay="2000">
+        <vue-glide :type="typeglide" :breakpoints="breakpoin" :autoplay="5000">
             <vue-glide-slide>
                 <div class="isi">
                     <div class="center"><b>Jumlah Kasus:</b></div>
@@ -78,13 +78,13 @@
             <vue-glide-slide>
                 <b>Bar chart</b><br>
                 <span>• Grafik batang</span>
-                <barchart v-if="loaded" :bardata="chartdata" />
+                <barchart v-if="loaded" :bardata="barchart" />
                 <div class="center" style="margin-top: 10px">
                     <span>Indonesia</span>
                 </div>
                 <div class="single-card" style="margin:50px 10px;">
                     <div style="padding: 10px;"><span class="tred">•</span>
-                        <span> Grafik batang dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
+                        <span> Grafik batang jumlah kasus baru tiap harinya dari dampak kasus penyebaran pandemik Coronavirus Disease (COVID-19) di <b>Indonesia</b> selama 14 hari terakhir.</span>
                     </div>
                 </div>
             </vue-glide-slide>
@@ -140,6 +140,7 @@ export default {
                     perView: 1
                 }
             },
+            barchart: '',
             chartdata: '',
             doughdata: '',
             loaded: false,
@@ -170,6 +171,9 @@ export default {
                 var conf = []
                 var deat = []
                 var reco = []
+                var bconf = []
+                var bdeat = []
+                var breco = []
                 var data = response.data.Indonesia.slice(-14)
                 var doughnut = response.data.Indonesia.slice(-1)
 
@@ -183,8 +187,40 @@ export default {
                     conf.push(data[i].confirmed)
                     deat.push(data[i].deaths)
                     reco.push(data[i].recovered)
+
+                    var z = 1+i;
+                    if (data[z] !== undefined) {
+                        bconf.push(data[z].confirmed-data[i].confirmed)
+                        bdeat.push(data[z].deaths-data[i].deaths)
+                        breco.push(data[z].recovered-data[i].recovered)
+                    }
                 }
 
+                vm.barchart = {
+                    labels: date.slice(1),
+                    datasets: [{
+                            label: 'Meninggal',
+                            borderColor: 'rgb(220,53,69,0.7)',
+                            backgroundColor: 'rgb(220,53,69,0.2)',
+                            data: bdeat,
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Konfirmasi',
+                            borderColor: 'rgb(0,184,148,0.7)',
+                            backgroundColor: 'rgb(0,184,148, 0.2)',
+                            data: bconf,
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Sembuh',
+                            borderColor: 'rgb(9, 132, 227, 0.7)',
+                            backgroundColor: 'rgb(9, 132, 227, 0.2)',
+                            data: breco,
+                            borderWidth: 1
+                        }
+                    ]
+                }
                 vm.chartdata = {
                     labels: date,
                     datasets: [{
