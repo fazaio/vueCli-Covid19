@@ -10,7 +10,7 @@
                             <span class="tgreen">•</span> <span>Konfirmasi</span>
                         </div>
                         <div class="col center">
-                            <div style="font-size: 30px;padding: 15px;"> {{ rest }}</div>
+                            <div style="font-size: 30px;padding: 15px;"> -</div>
                             <span class="tyellow">• </span><span>Dalam perawatan</span>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="single-card" style="margin:10px 10px;">
                     <div style="padding: 10px;"><span class="tred">•</span>
-                        <span> Update : <br>{{lastupdate}}</span>
+                        <span> Update : {{lastupdate}}</span>
                     </div>
                 </div>
             </vue-glide-slide>
@@ -160,22 +160,9 @@ export default {
         }
     },
     created() {
-        this.datalocal()
         this.getChart()
     },
     methods: {
-        datalocal: function() {
-            var vm = this;
-            axios.get('https://covid19.mathdro.id/api/countries/ID').then(function(response) {
-                vm.confirmed = response.data.confirmed.value;
-                vm.recovered = response.data.recovered.value;
-                vm.deaths = response.data.deaths.value;
-                vm.lastupdate = response.data.lastUpdate;
-                vm.rest = response.data.confirmed.value - response.data.recovered.value - response.data.deaths.value;
-            }, function(error) {
-                console.log(error.statusText);
-            });
-        },
         getChart() {
             var vm = this;
             axios.get('https://pomber.github.io/covid19/timeseries.json').then(function(response) {
@@ -188,6 +175,11 @@ export default {
                 var breco = []
                 var data = response.data.Indonesia.slice(-14)
                 var doughnut = response.data.Indonesia.slice(-1)
+
+                vm.confirmed = data[data.length-1].confirmed
+                vm.deaths = data[data.length-1].deaths
+                vm.recovered = data[data.length-1].recovered
+                vm.lastupdate = data[data.length-1].date
 
                 var doughnutdat = []
                 doughnutdat[2] = doughnut[0].confirmed
